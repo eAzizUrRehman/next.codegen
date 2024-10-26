@@ -24,18 +24,16 @@ const Home = () => {
     console.log('Form submitted');
   };
   return (
-    <div className="no-scrollbar flex min-h-dvh w-screen flex-col items-center justify-center dark:bg-black dark:text-white">
-      <div className="my-10 flex h-full w-full max-w-md grow flex-col px-10 shadow-input">
-        <GradientDivider />
-        <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
-          Welcome to CodeGen™
-        </h2>
+    <div className="no-scrollbar mx-auto flex h-full w-fit max-w-md grow flex-col items-center justify-center rounded-2xl px-10 shadow-input dark:bg-black dark:text-white">
+      <GradientDivider />
+      <h2 className="text-xl font-bold text-neutral-800 dark:text-neutral-200">
+        Welcome to CodeGen™
+      </h2>
 
-        <form className="flex h-full grow flex-col" onSubmit={handleSubmit}>
-          <Questionnaire />
-          <GradientDivider />
-        </form>
-      </div>
+      <form className="flex h-full grow flex-col" onSubmit={handleSubmit}>
+        <Questionnaire />
+        <GradientDivider />
+      </form>
     </div>
   );
 };

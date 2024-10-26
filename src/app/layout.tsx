@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { ShootingStars } from '@/components/ui/shooting-stars.aceternity';
+import { StarsBackground } from '@/components/ui/stars-background.aceternity';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -26,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} no-scrollbar antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} no-scrollbar flex min-h-dvh w-screen items-center justify-center bg-black antialiased`}
       >
         {children}
+        <ShootingStars />
+        <StarsBackground />
       </body>
     </html>
   );
