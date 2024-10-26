@@ -1,4 +1,3 @@
-
 export type Store = {
   _isHydrated: boolean;
 
