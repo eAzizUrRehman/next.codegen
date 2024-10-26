@@ -159,13 +159,9 @@ const Question: React.FC<QuestionProps> = ({ step }) => {
       <ul className="flex grow flex-col justify-center space-y-5">
         {step?.questions.map((q, index) => (
           <li key={index} className="space-y-2">
-            <Label htmlFor={`question-${index}`}>{q?.label}</Label>
+            <Label htmlFor={`${index}`}>{q?.label}</Label>
             <LabelInputContainer>
-              <Input
-                id={`question-${index}`}
-                placeholder={q?.placeholder}
-                type="text"
-              />
+              <Input id={`${index}`} placeholder={q?.placeholder} type="text" />
             </LabelInputContainer>
           </li>
         ))}

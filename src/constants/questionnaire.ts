@@ -9,15 +9,15 @@ const steps = [
     questions: [
       {
         label: 'First Name *',
-        placeholder: 'Your first name',
+        placeholder: 'e.g., Nayab',
       },
       {
         label: 'Last Name',
-        placeholder: 'Your last name',
+        placeholder: 'e.g., Noor',
       },
       {
         label: 'Email Address',
-        placeholder: 'Your email address',
+        placeholder: 'e.g., contact@nayab.com',
       },
       {
         label: 'What would you like to name your project?',
