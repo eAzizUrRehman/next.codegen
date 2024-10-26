@@ -3,6 +3,11 @@
 @tailwind utilities;
 
 @layer utilities {
+  button {
+    @apply outline-none focus:outline-none;
+  }
+}
+@layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }

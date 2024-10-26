@@ -19,6 +19,10 @@ const steps = [
         label: 'Email Address',
         placeholder: 'Your email address',
       },
+      {
+        label: 'What would you like to name your project?',
+        placeholder: 'e.g., CodeGen, Workflow',
+      },
     ],
   },
   {
