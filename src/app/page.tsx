@@ -10,7 +10,7 @@ import {
 import { Label } from '@/components/ui/label.aceternity'
 import { Input } from '@/components/ui/input.aceternity'
 import BottomGradient from '@/components/ui/bottom-gradient.aceternity'
-import steps from '@/data/questionnaire'
+import steps from '@/constants/questionnaire'
 
 const Home = () => {
   const [step, setStep] = useState(1)

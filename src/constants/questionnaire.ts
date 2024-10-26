@@ -8,8 +8,8 @@ const steps = [
         ],
         questions: [
             {
-                label: 'First Name',
-                placeholder: 'Your first name'
+                label: 'First Name *',
+                placeholder: 'Your first name',
             },
             {
                 label: 'Last Name',
@@ -31,22 +31,18 @@ const steps = [
         questions: [
             {
                 label: "What type of application are you looking to create?",
-                value: "",
                 placeholder: "e.g., web app, mobile app, desktop app"
             },
             {
                 label: "What is the primary purpose of the application?",
-                value: "",
                 placeholder: "e.g., social networking, e-commerce, data management"
             },
             {
                 label: "What problem are you trying to solve with this code?",
-                value: "",
                 placeholder: "Describe the problem"
             },
             {
                 label: "What is the main objective or goal you want this code to achieve?",
-                value: "",
                 placeholder: "Describe the main objective"
             }
         ]
@@ -61,12 +57,10 @@ const steps = [
         questions: [
             {
                 label: "Describe the target audience or users of this code.",
-                value: "",
                 placeholder: "e.g., developers, businesses, general public"
             },
             {
                 label: "What problem does your application aim to solve for this audience?",
-                value: "",
                 placeholder: "Describe the problem for the audience"
             }
         ]
@@ -81,17 +75,14 @@ const steps = [
         questions: [
             {
                 label: "What are the key features you want to include?",
-                value: "",
                 placeholder: "e.g., user authentication, notifications, data visualization"
             },
             {
                 label: "Are there any specific technologies or frameworks you want to use or avoid?",
-                value: "",
                 placeholder: "e.g., React, Node.js, Flutter"
             },
             {
                 label: "Is the code intended for a specific industry or domain? If so, which one?",
-                value: "",
                 placeholder: "e.g., healthcare, finance, education"
             }
         ]
@@ -106,17 +97,14 @@ const steps = [
         questions: [
             {
                 label: "Do you have any design preferences or themes in mind?",
-                value: "",
                 placeholder: "e.g., minimalist, colorful, professional"
             },
             {
                 label: "What kind of user interface do you have in mind?",
-                value: "",
                 placeholder: "e.g., simple, complex, mobile-friendly"
             },
             {
                 label: "Should the code format align with a specific development style guide?",
-                value: "",
                 placeholder: "e.g., Airbnb JavaScript Style Guide"
             }
         ]
@@ -131,17 +119,14 @@ const steps = [
         questions: [
             {
                 label: "Are there any constraints or limitations the code should be aware of?",
-                value: "",
                 placeholder: "e.g., limited memory, specific hardware requirements"
             },
             {
                 label: "Should the code be optimized for a specific type of workload?",
-                value: "",
                 placeholder: "e.g., CPU, I/O"
             },
             {
                 label: "Do you expect the code to handle large datasets or high-traffic scenarios?",
-                value: "",
                 placeholder: "e.g., millions of records, thousands of concurrent users"
             },
         ]
@@ -156,12 +141,10 @@ const steps = [
         questions: [
             {
                 label: "Will your application need to integrate with any existing systems or APIs?",
-                value: "",
                 placeholder: "e.g., payment gateways, social media"
             },
             {
                 label: "What platforms should the application be compatible with?",
-                value: "",
                 placeholder: "e.g., iOS, Android, web browsers"
             }
         ]
@@ -176,12 +159,10 @@ const steps = [
         questions: [
             {
                 label: "Do you have any examples of similar applications that you like?",
-                value: "",
                 placeholder: "e.g., similar apps or websites"
             },
             {
                 label: "Is there anything else you would like to share that might help us understand your project better?",
-                value: "",
                 placeholder: "Additional information"
             }
         ]
