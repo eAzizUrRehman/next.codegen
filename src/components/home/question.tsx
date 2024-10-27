@@ -17,7 +17,7 @@ interface QuestionProps {
 const Question: React.FC<QuestionProps> = ({ step }) => {
   return (
     <div className="flex h-full grow flex-col">
-      <h3 className="">{step?.title || `Step ${step?.number}`}</h3>
+      <h3 className="font-bold">{step?.title || `Step ${step?.number}`}</h3>
       <p className="mt-2 max-w-sm text-sm text-neutral-600 dark:text-neutral-300">
         <span className="block font-semibold">{step?.description[0]}</span>
         <span>{step?.description[1]}</span>
