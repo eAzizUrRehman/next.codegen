@@ -1,5 +1,5 @@
 export const vanishingTexts = [
-  'AI won’t replace you, people using it will.',
+  "AI won't replace you, person using it will.",
   'Mastering AI is mastering the future.',
   'Embrace AI, or get left behind.',
   'Those who adapt to AI thrive.',
