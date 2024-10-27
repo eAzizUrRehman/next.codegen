@@ -17,7 +17,7 @@ const steps = [
       },
       {
         label: 'Email Address',
-        placeholder: 'e.g., contact@nayab.com',
+        placeholder: 'e.g., hello@nayab.com',
       },
       {
         label: 'What would you like to name your project?',
