@@ -1,24 +1,41 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { persist } from 'zustand/middleware';
-import { Store } from '../types/questionnaire.d';
+import { CodegenStore } from './types';
+import { produce } from 'immer';
 
-const useStore = create<Store>()(
+const useCodegenStore = create<CodegenStore>()(
   persist(
     immer((set) => ({
       _isHydrated: false,
+      data: [
+        {
+          number: 0,
+          questions: [''],
+        },
+      ],
       setHydrated: () => set({ _isHydrated: true }),
-      // activateHeaderLink: (id) =>
-      //   set((state) => ({
-      //     headerLinks: state.headerLinks.map((link) =>
-      //       link.id === id
-      //         ? { ...link, isActive: true }
-      //         : { ...link, isActive: false }
-      //     ),
-      //   })),
+      setQuestionValue: (
+        stepNumber: number,
+        questionNumber: number,
+        value: string
+      ) => {
+        set((state) => {
+          const newState = produce(state, (draft) => {
+            if (!draft.data[stepNumber])
+              draft.data[stepNumber] = { number: stepNumber, questions: [] };
+
+            if (!draft.data[stepNumber].questions[questionNumber])
+              draft.data[stepNumber].questions[questionNumber] = '';
+
+            draft.data[stepNumber].questions[questionNumber] = value;
+          });
+          return newState;
+        });
+      },
     })),
     {
-      name: 'header-store',
+      name: 'codegen-store',
       onRehydrateStorage() {
         return (state, error) => {
           if (!error) state?.setHydrated();
@@ -29,4 +46,4 @@ const useStore = create<Store>()(
   )
 );
 
-export default useStore;
+export default useCodegenStore;
