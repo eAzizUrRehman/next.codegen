@@ -30,21 +30,16 @@ const steps = [
     ],
     questions: [
       {
-        label: 'What type of application are you looking to create?',
+        label: 'What type of application are you creating?',
         placeholder: 'e.g., web app, mobile app, desktop app',
       },
       {
-        label: 'What is the primary purpose of the application?',
+        label: 'What is the primary purpose of this application?',
         placeholder: 'e.g., social networking, e-commerce, data management',
       },
       {
-        label: 'What problem are you trying to solve with this code?',
-        placeholder: 'Describe the problem',
-      },
-      {
-        label:
-          'What is the main objective or goal you want this code to achieve?',
-        placeholder: 'Describe the main objective',
+        label: 'What problem or goal does this code address?',
+        placeholder: 'Briefly describe the problem or objective',
       },
     ],
   },
