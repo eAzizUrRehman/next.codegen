@@ -3,6 +3,8 @@ import { Input } from '../ui/input.aceternity';
 import LabelInputContainer from '../ui/label-input-container.aceternity';
 import { Label } from '../ui/label.aceternity';
 import { CodegenStore } from '@/store/types';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 interface QuestionProps {
   step: {
@@ -17,7 +19,11 @@ interface QuestionProps {
 }
 
 const Question: React.FC<QuestionProps> = ({ step }) => {
+  const _isHydrated = useCodegenStore(
+    (state: CodegenStore) => state._isHydrated
+  );
   const data = useCodegenStore((state: CodegenStore) => state.data);
+
   const setQuestionValue = useCodegenStore(
     (state: CodegenStore) => state.setQuestionValue
   );
@@ -39,14 +45,28 @@ const Question: React.FC<QuestionProps> = ({ step }) => {
           <li key={index} className="space-y-2">
             <Label htmlFor={`${index}`}>{q?.label}</Label>
             <LabelInputContainer>
-              <Input
-                type="text"
-                key={`${index}`}
-                id={`${index}`}
-                placeholder={q?.placeholder}
-                value={data[step.number]?.questions[index] || ''}
-                onChange={(e) => setInputValue(e, step.number, index)}
-              />
+              <SkeletonTheme
+                width={240}
+                height={440}
+                baseColor="#0d1117"
+                highlightColor="rgba(255,255,255,.1)"
+                borderRadius={8}
+              >
+                {_isHydrated ? (
+                  <Input
+                    type="text"
+                    key={`${index}`}
+                    id={`${index}`}
+                    placeholder={q?.placeholder}
+                    value={data[step.number]?.questions[index] || ''}
+                    onChange={(e) => setInputValue(e, step.number, index)}
+                  />
+                ) : (
+                  <div className="leading-none">
+                    <Skeleton height={44} width="100%" />
+                  </div>
+                )}
+              </SkeletonTheme>
             </LabelInputContainer>
           </li>
         ))}

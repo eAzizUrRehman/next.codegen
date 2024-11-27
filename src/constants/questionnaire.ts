@@ -8,12 +8,8 @@ const steps = [
     ],
     questions: [
       {
-        label: 'First Name *',
-        placeholder: 'e.g., Nayab',
-      },
-      {
-        label: 'Last Name',
-        placeholder: 'e.g., Noor',
+        label: 'Full Name *',
+        placeholder: 'e.g., Nayab Noor',
       },
       {
         label: 'Email Address',
