@@ -4,7 +4,7 @@ set -e
 echo "Deployment started..."
 
 # Pull the latest version of the app
-git pull --rebase origin main
+git pull --hard origin main
 echo "New changes copied to server !"
 
 echo "Installing Dependencies..."
