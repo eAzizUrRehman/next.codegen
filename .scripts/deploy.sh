@@ -3,13 +3,9 @@ set -e
 
 echo "Deployment started..."
 
-# Fetch the latest changes from the remote
-git fetch origin
-
-# Reset the local main branch to match the remote main branch
-git reset --hard origin/main
-
-echo "New changes copied to server!"
+# Pull the latest version of the app
+git pull origin main
+echo "New changes copied to server !"
 
 echo "Installing Dependencies..."
 npm install --yes
