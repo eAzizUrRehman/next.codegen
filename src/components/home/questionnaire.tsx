@@ -4,6 +4,8 @@ import Image from 'next/image';
 import BottomGradient from '../ui/bottom-gradient.aceternity';
 import Question from './question';
 import GradientDivider from '../ui/gradient-divider.aceternity';
+import useCodegenStore from '@/store';
+import { CodegenStore } from '@/store/types';
 
 interface QuestionnaireProps {
   currentStep: number;
@@ -14,10 +16,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
   currentStep,
   setCurrentStep,
 }) => {
+  const validateStep = useCodegenStore(
+    (state: CodegenStore) => state.validateStep
+  );
+
   const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (currentStep < steps.length - 1) {
-      setCurrentStep(currentStep + 1);
+    {
+      const errorAdded = validateStep(currentStep);
+
+      if (errorAdded) return;
+
+      if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
     }
   };
 

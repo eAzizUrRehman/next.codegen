@@ -1,4 +1,26 @@
-const steps = [
+export type Validation = {
+  required?: boolean;
+  max?: number;
+  maxlength?: number;
+  min?: number;
+  minlength?: number;
+};
+
+export type Question = {
+  type?: string;
+  label: string;
+  placeholder: string;
+  validation?: Validation;
+};
+
+export type Step = {
+  title: string;
+  number: number;
+  description: string[];
+  questions: Question[];
+};
+
+const steps: Step[] = [
   {
     number: 0,
     title: 'Introduction',
@@ -8,16 +30,28 @@ const steps = [
     ],
     questions: [
       {
-        label: 'Full Name *',
+        type: 'text',
+        label: 'Full Name',
         placeholder: 'e.g., Nayab Noor',
+        validation: {
+          required: true,
+          maxlength: 30,
+        },
       },
       {
+        type: 'email',
         label: 'Email Address',
         placeholder: 'e.g., hello@nayab.com',
+        validation: {
+          maxlength: 50,
+        },
       },
       {
         label: 'What would you like to name your project?',
         placeholder: 'e.g., CodeGen, Workflow',
+        validation: {
+          maxlength: 50,
+        },
       },
     ],
   },
@@ -32,14 +66,23 @@ const steps = [
       {
         label: 'What type of application are you creating?',
         placeholder: 'e.g., web app, mobile app, desktop app',
+        validation: {
+          required: true,
+        },
       },
       {
         label: 'What is the primary purpose of this application?',
         placeholder: 'e.g., social networking, e-commerce, data management',
+        validation: {
+          required: true,
+        },
       },
       {
         label: 'What problem or goal does this code address?',
         placeholder: 'Briefly describe the problem or objective',
+        validation: {
+          required: true,
+        },
       },
     ],
   },
@@ -54,11 +97,17 @@ const steps = [
       {
         label: 'Describe the target audience or users of this code.',
         placeholder: 'e.g., developers, businesses, general public',
+        validation: {
+          required: true,
+        },
       },
       {
         label:
           'What problem does your application aim to solve for this audience?',
         placeholder: 'Describe the problem for the audience',
+        validation: {
+          required: true,
+        },
       },
     ],
   },
@@ -74,16 +123,25 @@ const steps = [
         label: 'What are the key features you want to include?',
         placeholder:
           'e.g., user authentication, notifications, data visualization',
+        validation: {
+          required: true,
+        },
       },
       {
         label:
           'Are there any specific technologies or frameworks you want to use or avoid?',
         placeholder: 'e.g., React, Node.js, Flutter',
+        validation: {
+          required: true,
+        },
       },
       {
         label:
           'Is the code intended for a specific industry or domain? If so, which one?',
         placeholder: 'e.g., healthcare, finance, education',
+        validation: {
+          required: true,
+        },
       },
     ],
   },
@@ -98,15 +156,24 @@ const steps = [
       {
         label: 'Do you have any design preferences or themes in mind?',
         placeholder: 'e.g., minimalist, colorful, professional',
+        validation: {
+          required: true,
+        },
       },
       {
         label: 'What kind of user interface do you have in mind?',
         placeholder: 'e.g., simple, complex, mobile-friendly',
+        validation: {
+          required: true,
+        },
       },
       {
         label:
           'Should the code format align with a specific development style guide?',
         placeholder: 'e.g., Airbnb JavaScript Style Guide',
+        validation: {
+          required: true,
+        },
       },
     ],
   },
@@ -122,15 +189,24 @@ const steps = [
         label:
           'Are there any constraints or limitations the code should be aware of?',
         placeholder: 'e.g., limited memory, specific hardware requirements',
+        validation: {
+          required: true,
+        },
       },
       {
         label: 'Should the code be optimized for a specific type of workload?',
         placeholder: 'e.g., CPU, I/O',
+        validation: {
+          required: true,
+        },
       },
       {
         label:
           'Do you expect the code to handle large datasets or high-traffic scenarios?',
         placeholder: 'e.g., millions of records, thousands of concurrent users',
+        validation: {
+          required: true,
+        },
       },
     ],
   },
@@ -146,10 +222,16 @@ const steps = [
         label:
           'Will your application need to integrate with any existing systems or APIs?',
         placeholder: 'e.g., payment gateways, social media',
+        validation: {
+          required: true,
+        },
       },
       {
         label: 'What platforms should the application be compatible with?',
         placeholder: 'e.g., iOS, Android, web browsers',
+        validation: {
+          required: true,
+        },
       },
     ],
   },
@@ -165,11 +247,17 @@ const steps = [
         label:
           'Do you have any examples of similar applications that you like?',
         placeholder: 'e.g., similar apps or websites',
+        validation: {
+          required: true,
+        },
       },
       {
         label:
           'Is there anything else you would like to share that might help us understand your project better?',
         placeholder: 'Additional information',
+        validation: {
+          required: true,
+        },
       },
     ],
   },

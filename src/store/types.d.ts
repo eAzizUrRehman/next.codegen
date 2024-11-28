@@ -1,6 +1,7 @@
 type Step = {
   number: number;
   questions: string[];
+  errors: string[];
 };
 
 export type CodegenStore = {
@@ -13,4 +14,6 @@ export type CodegenStore = {
     questionNumber: number,
     value: string
   ) => void;
+  setErrorValue: (stepNumber: number, questionNumber: number) => void;
+  validateStep: (stepNumber: number, isMounting?: boolean) => boolean;
 };
