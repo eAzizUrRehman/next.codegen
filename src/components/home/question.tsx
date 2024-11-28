@@ -1,5 +1,4 @@
-import { setErrorMap, z } from 'zod';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import useCodegenStore from '@/store';
 import { Input } from '../ui/input.aceternity';
 import LabelInputContainer from '../ui/label-input-container.aceternity';
@@ -34,7 +33,7 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
     const errorAdded = validateStep(step.number, true);
 
     if (errorAdded) return;
-  }, [_isHydrated]);
+  }, [_isHydrated, step.number, validateStep]);
 
   const setInputValueAndValidate = (
     e: React.ChangeEvent<HTMLInputElement>,
