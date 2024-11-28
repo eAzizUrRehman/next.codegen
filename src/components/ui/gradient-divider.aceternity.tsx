@@ -1,6 +1,12 @@
-const GradientDivider: React.FC = () => {
+interface GradientDividerProps {
+  className?: string;
+}
+
+const GradientDivider: React.FC<GradientDividerProps> = ({ className }) => {
   return (
-    <div className="h-[1px] w-full bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700" />
+    <div
+      className={`h-px bg-gradient-to-r from-transparent via-neutral-300 to-transparent dark:via-neutral-700 ${className}`}
+    />
   );
 };
 

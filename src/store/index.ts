@@ -9,6 +9,29 @@ const useCodegenStore = create<CodegenStore>()(
   persist(
     immer((set) => ({
       _isHydrated: false,
+      vanishingTexts: [
+        null,
+        "AI won't replace you, person using it will.",
+        'Mastering AI is mastering the future.',
+        'Embrace AI, or get left behind.',
+        'Those who adapt to AI thrive.',
+        'AI amplifies potential, not just tasks.',
+        'Future leaders are AI collaborators.',
+        'AI is a tool; mastery is the advantage.',
+        'The future favors those who embrace AI.',
+        'With AI, adapt or be outpaced.',
+        'AI: empower or be outdone.',
+        'AI mastery is future-proofing.',
+        'AI users shape tomorrow.',
+        'The edge belongs to AI users.',
+        'AI competence is the new skillset.',
+        'Learn AI to lead the future.',
+        'Smart work embraces AI tools.',
+        'AI fluency defines the future.',
+        'In AI, opportunity meets readiness.',
+        'AI-driven minds shape success.',
+        'The AI advantage belongs to learners.',
+      ],
       data: [
         {
           number: 0,
@@ -17,6 +40,14 @@ const useCodegenStore = create<CodegenStore>()(
         },
       ],
       setHydrated: () => set({ _isHydrated: true }),
+      setWelcomeMessage: () => {
+        set((state) => {
+          const newState = produce(state, (draft) => {
+            draft.vanishingTexts[0] = `${draft.data[0].questions[0]}!! 👋 Welcome! Let's get started.`;
+          });
+          return newState;
+        });
+      },
       setQuestionValue: (
         stepNumber: number,
         questionNumber: number,

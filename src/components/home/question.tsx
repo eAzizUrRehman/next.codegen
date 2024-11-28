@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import useCodegenStore from '@/store';
 import { Input } from '../ui/input.aceternity';
@@ -15,6 +17,10 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
 
   const data = useCodegenStore((state: CodegenStore) => state.data);
 
+  const setWelcomeMessage = useCodegenStore(
+    (state: CodegenStore) => state.setWelcomeMessage
+  );
+
   const validateStep = useCodegenStore(
     (state: CodegenStore) => state.validateStep
   );
@@ -26,6 +32,11 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
   const setErrorValue = useCodegenStore(
     (state: CodegenStore) => state.setErrorValue
   );
+
+  useEffect(() => {
+    const name = data[0].questions[0].trim();
+    if (step.number === 0 && name !== '') setWelcomeMessage();
+  });
 
   useEffect(() => {
     if (!_isHydrated) return;
@@ -48,8 +59,8 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
   };
 
   return (
-    <div className="flex h-full grow flex-col">
-      <ul className="flex grow flex-col justify-center">
+    <div className="custom-scrollbar mr-[26px] mt-2 min-h-[calc(100dvh-300px)] overflow-y-auto pr-2">
+      <ul className=" ">
         {step?.questions?.map((q, index) => (
           <li key={index} className="mb-2">
             <Label htmlFor={`${index}`}>
@@ -83,7 +94,9 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
                   </div>
                 )}
                 <div className="ml-3 mt-1 h-4 text-xs text-red-500">
-                  {data[step.number]?.errors[index] || ''}
+                  {data[step.number]?.errors[index] && (
+                    <>{data[step.number]?.errors[index] || ''}</>
+                  )}
                 </div>
               </SkeletonTheme>
             </LabelInputContainer>

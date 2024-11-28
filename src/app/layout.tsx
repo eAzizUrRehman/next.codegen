@@ -16,7 +16,7 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'CodeGen | AI-Powered Code Generator',
+  title: 'CodeGen™ | AI-Powered Code Generator',
   description:
     'CodeGen is an intuitive, AI-driven tool that helps you generate custom software and applications by answering a few simple questions.',
 };
@@ -27,9 +27,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="dark h-dvh">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} no-scrollbar flex min-h-dvh w-screen items-center justify-center bg-black antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} no-scrollbar flex h-full max-h-dvh w-screen items-center justify-center overflow-hidden bg-black antialiased`}
       >
         {children}
         <ShootingStars />

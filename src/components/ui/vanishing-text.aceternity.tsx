@@ -7,7 +7,7 @@ const VanishingText = ({
   texts,
   className,
 }: {
-  texts: string[];
+  texts: (string | null)[];
   className?: string;
 }) => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);

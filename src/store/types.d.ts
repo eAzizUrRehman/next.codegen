@@ -6,6 +6,7 @@ type Step = {
 
 export type CodegenStore = {
   _isHydrated: boolean;
+  vanishingTexts: (string | null)[];
   data: Step[];
 
   setHydrated: () => void;
@@ -14,6 +15,7 @@ export type CodegenStore = {
     questionNumber: number,
     value: string
   ) => void;
+  setWelcomeMessage: () => void;
   setErrorValue: (stepNumber: number, questionNumber: number) => void;
   validateStep: (stepNumber: number, isMounting?: boolean) => boolean;
 };

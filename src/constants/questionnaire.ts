@@ -1,9 +1,9 @@
 export type Validation = {
   required?: boolean;
   max?: number;
-  maxlength?: number;
+  maxLength?: number;
   min?: number;
-  minlength?: number;
+  minLength?: number;
 };
 
 export type Question = {
@@ -35,7 +35,7 @@ const steps: Step[] = [
         placeholder: 'e.g., Nayab Noor',
         validation: {
           required: true,
-          maxlength: 30,
+          maxLength: 30,
         },
       },
       {
@@ -43,14 +43,14 @@ const steps: Step[] = [
         label: 'Email Address',
         placeholder: 'e.g., hello@nayab.com',
         validation: {
-          maxlength: 50,
+          maxLength: 50,
         },
       },
       {
         label: 'What would you like to name your project?',
         placeholder: 'e.g., CodeGen, Workflow',
         validation: {
-          maxlength: 50,
+          maxLength: 50,
         },
       },
     ],
@@ -240,7 +240,7 @@ const steps: Step[] = [
     title: 'Additional Information',
     description: [
       'Your insights are invaluable to us!',
-      'Please share any additional information that might help us understand your project better.',
+      'Please share any details to help us better understand your project.',
     ],
     questions: [
       {

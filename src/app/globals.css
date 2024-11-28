@@ -7,6 +7,7 @@
     @apply outline-none focus:outline-none;
   }
 }
+
 @layer utilities {
   .no-scrollbar::-webkit-scrollbar {
     display: none;
@@ -14,5 +15,21 @@
 
   .no-scrollbar {
     scrollbar-width: none;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    @apply w-1.5;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-[#27272a];
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent hover:bg-transparent;
+  }
+
+  .identify {
+    @apply xxs:bg-orange-900 xs:bg-green-900 bg-red-900 sm:bg-blue-900 md:bg-yellow-900 lg:bg-pink-900 xl:bg-purple-900;
   }
 }
