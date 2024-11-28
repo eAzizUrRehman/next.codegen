@@ -22,13 +22,12 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
 
   const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    {
-      const errorAdded = validateStep(currentStep);
 
-      if (errorAdded) return;
+    const errorAdded = validateStep(currentStep);
 
-      if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
-    }
+    if (errorAdded) return;
+
+    if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
   };
 
   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -43,6 +42,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
       <div className="">
         <h3 className="text-center font-bold">
           {steps[currentStep]?.title || `Step ${steps[currentStep]?.number}`}
+          <br />
+          {`Step ${steps[currentStep]?.number}`}
         </h3>
         <p className="mt-2 text-center text-sm text-neutral-600 dark:text-neutral-300">
           <span className="block text-center font-semibold">

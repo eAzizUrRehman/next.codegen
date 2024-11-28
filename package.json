@@ -45,8 +45,6 @@
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
-      "npm run type-check",
-      "eslint --fix",
       "prettier --write --ignore-unknown"
     ]
   }

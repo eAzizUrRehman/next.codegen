@@ -71,7 +71,7 @@ const useCodegenStore = create<CodegenStore>()(
 
               const error = findError(stepNumber, index, value, isMounting);
 
-              if (error) errorAdded = true;
+              if (error && error.trim() !== '') errorAdded = true;
 
               draft.data[stepNumber].errors[index] = error;
             });

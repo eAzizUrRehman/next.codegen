@@ -1,12 +1,17 @@
 import steps from '@/constants/questionnaire';
 
+export const convertToSentenceCase = (str: string) =>
+  str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
 export const findError = (
   stepNumber: number,
   questionNumber: number,
   value: string,
   isMounting?: boolean
 ) => {
-  const fieldLabel = steps[stepNumber].questions[questionNumber]?.label;
+  let fieldLabel = steps[stepNumber].questions[questionNumber]?.label;
+
+  fieldLabel = convertToSentenceCase(fieldLabel);
 
   const type = steps[stepNumber].questions[questionNumber]?.type;
 
