@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -21,9 +21,9 @@
     "framer-motion": "^11.11.9",
     "immer": "^10.1.1",
     "lucide-react": "^0.453.0",
-    "next": "14.2.16",
-    "react": "^18",
-    "react-dom": "^18",
+    "next": "15.1.0",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
     "react-loading-skeleton": "^3.5.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
@@ -31,10 +31,10 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.2",
     "eslint": "^8",
-    "eslint-config-next": "14.2.16",
+    "eslint-config-next": "15.1.0",
     "husky": "^9.1.6",
     "lint-staged": "^15.2.10",
     "postcss": "^8",
@@ -47,5 +47,9 @@
     "*.{js,jsx,ts,tsx}": [
       "prettier --write --ignore-unknown"
     ]
+  },
+  "overrides": {
+    "@types/react": "19.0.1",
+    "@types/react-dom": "19.0.2"
   }
 }

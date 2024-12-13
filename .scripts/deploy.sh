@@ -3,12 +3,11 @@ set -e
 
 echo "Deployment started..."
 
-# Pull the latest version of the app
 git pull origin main
 echo "New changes copied to server !"
 
 echo "Installing Dependencies..."
-npm install --yes
+npm install --yes --force
 
 echo "Creating Production Build..."
 npm run build
