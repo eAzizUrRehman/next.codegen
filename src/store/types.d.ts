@@ -8,6 +8,8 @@ export type CodegenStore = {
   _isHydrated: boolean;
   vanishingTexts: (string | null)[];
   data: Step[];
+  finalPrompt: string;
+  isFetchingResponse: boolean;
   geminiResponse: string;
 
   setHydrated: () => void;
@@ -19,5 +21,6 @@ export type CodegenStore = {
   setWelcomeMessage: () => void;
   setErrorValue: (stepNumber: number, questionNumber: number) => void;
   validateStep: (stepNumber: number, isMounting?: boolean) => boolean;
-  fetchGeminiAnswer: () => void;
+  setFinalPrompt: () => void;
+  fetchGeminiResponse: () => void;
 };

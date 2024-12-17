@@ -5,11 +5,11 @@ import { CodegenStore } from './types';
 import { produce } from 'immer';
 import { findError } from './helpers';
 import { GoogleGenerativeAI } from '@google/generative-ai';
-import steps, { Step } from '@/constants/questionnaire';
+import steps from '@/constants/questionnaire';
 
 const useCodegenStore = create<CodegenStore>()(
   persist(
-    immer((set) => ({
+    immer((set, get) => ({
       _isHydrated: false,
       vanishingTexts: [
         null,
@@ -41,6 +41,8 @@ const useCodegenStore = create<CodegenStore>()(
           errors: [''],
         },
       ],
+      finalPrompt: '',
+      isFetchingResponse: false,
       geminiResponse: '',
       setHydrated: () => set({ _isHydrated: true }),
       setWelcomeMessage: () => {
@@ -115,8 +117,46 @@ const useCodegenStore = create<CodegenStore>()(
 
         return errorAdded;
       },
+      setFinalPrompt: () => {
+        let result = [];
 
-      fetchGeminiAnswer: async () => {
+        const state = get();
+
+        for (let i = 1; i < steps.length; i++) {
+          const step = steps[i];
+
+          if (
+            !step ||
+            !step.questions ||
+            step.number === 98 ||
+            step.number === 99
+          )
+            continue;
+
+          for (let j = 0; j < step.questions.length; j++) {
+            const question = step.questions[j];
+            const answer = state.data[i]?.questions[j];
+
+            if (answer) {
+              result.push(`${question.label}\\n${answer}`);
+            }
+          }
+        }
+
+        const finalPrompt = result.join('\\n\\n');
+
+        set((state) => {
+          const newState = produce(state, (draft) => {
+            draft.finalPrompt = finalPrompt;
+          });
+          return newState;
+        });
+      },
+      fetchGeminiResponse: async () => {
+        const state = get();
+
+        if (state.isFetchingResponse) return;
+
         const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
 
         if (!apiKey) {
@@ -127,44 +167,33 @@ const useCodegenStore = create<CodegenStore>()(
 
         const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
-        const state = useCodegenStore.getState();
-        console.log(state.data);
-
-        function getPrompt(steps: Step[]): string {
-          let result = [];
-
-          for (let i = 1; i < steps.length; i++) {
-            if (steps[i].number === 98 || steps[i].number === 99) return '';
-
-            const step = steps[i];
-
-            if (!step.questions) return '';
-
-            for (let j = 0; j < step.questions.length; j++) {
-              const question = step.questions[j];
-              const answer = state.data[i]?.questions[j];
-              if (answer) {
-                result.push(`${question.label}\n${answer}`);
-              }
-            }
-          }
-
-          return result.join('\n\n');
-        }
-
-        const prompt = getPrompt(steps);
-
-        const result = await model.generateContent(prompt);
-        const geminiResponse = result.response.text();
-
         set((state) => {
           const newState = produce(state, (draft) => {
-            draft.geminiResponse = geminiResponse;
+            draft.isFetchingResponse = true;
           });
           return newState;
         });
 
-        // return result.response.text()
+        try {
+          const result = await model.generateContent(state.finalPrompt);
+          const geminiResponse = result.response.text();
+
+          set((state) => {
+            const newState = produce(state, (draft) => {
+              draft.geminiResponse = geminiResponse;
+            });
+            return newState;
+          });
+        } catch (error) {
+          console.log('Error while fetching the response', error);
+        } finally {
+          set((state) => {
+            const newState = produce(state, (draft) => {
+              draft.isFetchingResponse = false;
+            });
+            return newState;
+          });
+        }
       },
     })),
     {
@@ -172,7 +201,6 @@ const useCodegenStore = create<CodegenStore>()(
       onRehydrateStorage() {
         return (state, error) => {
           if (!error) state?.setHydrated();
-          else console.log('Failed to rehydrate header-store');
         };
       },
     }

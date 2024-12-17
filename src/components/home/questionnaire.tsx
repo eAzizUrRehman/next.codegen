@@ -22,8 +22,12 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
   const validateStep = useCodegenStore(
     (state: CodegenStore) => state.validateStep
   );
-  const fetchGeminiAnswer = useCodegenStore(
-    (state: CodegenStore) => state.fetchGeminiAnswer
+
+  const setFinalPrompt = useCodegenStore(
+    (state: CodegenStore) => state.setFinalPrompt
+  );
+  const fetchGeminiResponse = useCodegenStore(
+    (state: CodegenStore) => state.fetchGeminiResponse
   );
 
   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,10 +44,15 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
     if (errorAdded) return;
 
     if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
+
+    if (currentStep === steps.length - 3) {
+      setFinalPrompt();
+    }
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    fetchGeminiAnswer();
+    fetchGeminiResponse();
+    if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
   };
 
   return (
@@ -60,13 +69,14 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
         </p>
         <GradientDivider className="mr-4 mt-5 xxs:mr-5 xs:mr-10" />
       </div>
-      <div className="h-fit">
-        {currentStep !== 98 && currentStep !== 99 && (
+      <div className="h-full">
+        {/* {currentStep !== 98 && currentStep !== 99 && (
           <Question step={steps[currentStep]} />
         )}
 
         {currentStep === steps.length - 2 && <Preview />}
-        {currentStep === steps.length - 1 && <Response />}
+        {currentStep === steps.length - 1 && <Response />} */}
+        <Response />
       </div>
 
       <div className="">
@@ -87,7 +97,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
               <BottomGradient />
             </button>
           )}
-          {currentStep !== steps.length - 1 ? (
+          {currentStep !== steps.length - 2 ? (
             <button
               className="group/btn relative mt-4 flex h-10 w-full items-center justify-center gap-x-2 rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
               onClick={handleNext}
