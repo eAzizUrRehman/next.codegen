@@ -9,7 +9,7 @@ const Preview = () => {
   const promptArray = finalPrompt.split('\\n\\n');
 
   return (
-    <div className="custom-scrollbar mb-5 mr-[26px] mt-2 h-[53dvh] overflow-y-auto pr-2">
+    <div className="custom-scrollbar mr-[26px] h-[53dvh] overflow-y-auto pr-2">
       {promptArray.map((text, index) => {
         const [question, answer] = text.split('\\n');
         return (

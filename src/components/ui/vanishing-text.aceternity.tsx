@@ -6,9 +6,11 @@ import { useEffect, useRef, useState } from 'react';
 const VanishingText = ({
   texts,
   className,
+  animationTime = 3000,
 }: {
   texts: (string | null)[];
   className?: string;
+  animationTime?: number;
 }) => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
 
@@ -16,7 +18,7 @@ const VanishingText = ({
   const startAnimation = () => {
     intervalRef.current = setInterval(() => {
       setCurrentTextIndex((prev) => (prev + 1) % texts.length);
-    }, 3000);
+    }, animationTime);
   };
   const handleVisibilityChange = () => {
     if (document.visibilityState !== 'visible' && intervalRef.current) {

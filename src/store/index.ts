@@ -4,8 +4,8 @@ import { persist } from 'zustand/middleware';
 import { CodegenStore } from './types';
 import { produce } from 'immer';
 import { findError } from './helpers';
-import { GoogleGenerativeAI } from '@google/generative-ai';
 import steps from '@/constants/questionnaire';
+import { callGemini } from '@/app/actions';
 
 const useCodegenStore = create<CodegenStore>()(
   persist(
@@ -118,7 +118,7 @@ const useCodegenStore = create<CodegenStore>()(
         return errorAdded;
       },
       setFinalPrompt: () => {
-        let result = [];
+        const result = [];
 
         const state = get();
 
@@ -152,20 +152,10 @@ const useCodegenStore = create<CodegenStore>()(
           return newState;
         });
       },
-      fetchGeminiResponse: async () => {
+      GEMINI_API_KEY: async () => {
         const state = get();
 
         if (state.isFetchingResponse) return;
-
-        const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
-
-        if (!apiKey) {
-          throw new Error('NEXT_PUBLIC_GEMINI_API_KEY is not defined');
-        }
-
-        const genAI = new GoogleGenerativeAI(apiKey);
-
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
         set((state) => {
           const newState = produce(state, (draft) => {
@@ -175,8 +165,9 @@ const useCodegenStore = create<CodegenStore>()(
         });
 
         try {
-          const result = await model.generateContent(state.finalPrompt);
-          const geminiResponse = result.response.text();
+          const geminiResponse = (await callGemini(
+            state.finalPrompt
+          )) as string;
 
           set((state) => {
             const newState = produce(state, (draft) => {

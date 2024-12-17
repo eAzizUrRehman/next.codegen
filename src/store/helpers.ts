@@ -1,29 +1,22 @@
 import steps from '@/constants/questionnaire';
 
-export const convertToSentenceCase = (str: string): string => {
-  if (!str) return 'This field';
-
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-};
-
 export const findError = (
   stepNumber: number,
   questionNumber: number,
   value: string,
   isMounting?: boolean
 ) => {
-  let fieldLabel = steps[stepNumber].questions[questionNumber]?.label;
+  if (!steps || !steps[stepNumber]?.questions) return '';
 
-  fieldLabel = convertToSentenceCase(fieldLabel);
+  const question = steps[stepNumber]?.questions?.[questionNumber];
 
-  const type = steps[stepNumber].questions[questionNumber]?.type;
-
-  const validation = steps[stepNumber].questions[questionNumber]?.validation;
+  const type = question?.type ?? '';
+  const validation = question?.validation ?? {};
 
   if (!validation) return '';
 
   if (!isMounting && validation.required && value.length === 0)
-    return `${fieldLabel} is required`;
+    return `This field is required`;
 
   if (validation?.max && value.length > validation.max)
     return `This field must be less than ${validation.max} characters`;

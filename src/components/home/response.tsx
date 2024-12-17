@@ -1,7 +1,27 @@
 import useCodegenStore from '@/store';
 import { CodegenStore } from '@/store/types';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
+import CodeBlock from './code-block';
 import 'react-loading-skeleton/dist/skeleton.css';
+import VanishingText from '../ui/vanishing-text.aceternity';
+
+type TextVariant = 'normal' | 'bold' | 'bullet';
+
+interface TextPart {
+  text: string;
+  variant: TextVariant;
+}
+
+interface CodeBlock {
+  type: 'code';
+  content: string;
+  language: string;
+}
+
+interface TextBlock {
+  type: 'text';
+  content: TextPart[];
+}
 
 const Response = () => {
   const isFetchingResponse = useCodegenStore(
@@ -12,7 +32,7 @@ const Response = () => {
     (state: CodegenStore) => state.geminiResponse
   );
 
-  const splitText = (text: string): { text: string; variant: string }[] => {
+  const splitText = (text: string): TextPart[] => {
     return text
       .split('\n')
       .flatMap((line) => {
@@ -22,37 +42,28 @@ const Response = () => {
 
         if (line.startsWith('*')) {
           const bulletText = line.slice(1).trim();
-          const boldMatches = bulletText.match(/\*\*(.*?)\*\*/g) || [];
           const parts = bulletText.split(/\*\*(.*?)\*\*/);
 
           return parts
-            .map((part, index) => ({
+            .map((part) => ({
               text: part.trim(),
-              variant: boldMatches.includes(`**${part}**`) ? 'bold' : 'bullet',
+              variant: 'bullet',
             }))
-            .filter((part) => part.text !== '');
+            .filter((part) => part.text !== '') as TextPart[];
         }
 
         if (line.startsWith('**')) {
-          return [{ text: line.slice(2, -2), variant: 'bold' }];
+          return [{ text: line.slice(2, -2), variant: 'bold' as TextVariant }];
         }
 
-        return [{ text: line, variant: 'normal' }];
+        return [{ text: line, variant: 'normal' as TextVariant }];
       })
       .filter((part) => part.text !== '');
   };
 
-  const extractCodeBlocks = (
-    input: string
-  ): {
-    type: string;
-    content: string | { text: string; variant: string }[];
-  }[] => {
+  const extractCodeBlocks = (input: string): (CodeBlock | TextBlock)[] => {
     const codeBlockRegex = /```([\s\S]*?)```/g;
-    const result: {
-      type: string;
-      content: string | { text: string; variant: string }[];
-    }[] = [];
+    const result: (CodeBlock | TextBlock)[] = [];
     let lastIndex = 0;
     let match;
 
@@ -63,9 +74,11 @@ const Response = () => {
           content: splitText(input.slice(lastIndex, match.index).trim()),
         });
       }
+
       result.push({
         type: 'code',
-        content: match[1].trim(),
+        content: match[1].split('\n').slice(1).join('\n').trim(),
+        language: match[1].split(/[\n\s]/)[0],
       });
       lastIndex = codeBlockRegex.lastIndex;
     }
@@ -82,14 +95,10 @@ const Response = () => {
 
   const codeBlocks = extractCodeBlocks(geminiResponse);
 
-  const TextBlock = ({
-    content,
-  }: {
-    content: { text: string; variant: string }[];
-  }) => (
-    <>
+  const TextBlock = ({ content }: { content: TextPart[] }) => (
+    <div className="">
       {content.map((line, index) => (
-        <p key={index} className={`10 mt-5 text-white ${line.variant}`}>
+        <p key={index} className="mt-1 text-white">
           {line.variant === 'bold' ? (
             <span className="font-bold">{line.text}</span>
           ) : line.variant === 'bullet' ? (
@@ -109,12 +118,25 @@ const Response = () => {
           )}
         </p>
       ))}
-    </>
+    </div>
   );
 
-  const CodeBlock = ({ content }: { content: string }) => (
-    <pre className="my-10">{content}</pre>
-  );
+  const vanishingTexts = [
+    'Doing our best... 💪',
+    'Please wait while loading... ⏳',
+    'Almost there... preparing... 🔧',
+    'Hang tight, loading... 🚀',
+    'Gathering information... 🧠',
+    'This might take a moment... ⏱️',
+    'Just a few more seconds... ⏳',
+    'Hold on! Getting ready... ⚙️',
+    'Working on it... 🛠️',
+    'Syncing up... 🌐',
+    'Almost done loading... 🕒',
+    'Just a moment, on our way... 🛣️',
+    'Almost ready to serve you... 🍽️',
+    'One last step... nearly there... ⚡',
+  ];
 
   return (
     <div className="h-full pb-5">
@@ -126,21 +148,24 @@ const Response = () => {
         borderRadius={8}
       >
         {isFetchingResponse ? (
-          <div className="h-full pr-10 leading-none">
+          <div className="relative h-full pr-10 leading-none">
             <Skeleton height="100%" width="100%" className="" />
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+              <VanishingText
+                texts={vanishingTexts}
+                animationTime={1500}
+                className="text-sm"
+              />
+            </div>
           </div>
         ) : (
-          <div className="custom-scrollbar mr-[26px] mt-2 h-[53dvh] overflow-y-auto pr-2">
+          <div className="custom-scrollbar mr-[26px] h-[53dvh] overflow-y-auto pr-2">
             {codeBlocks.map((block, index) => (
-              <div className="" key={index}>
+              <div key={index}>
                 {block.type === 'code' ? (
-                  <CodeBlock content={block.content as string} />
+                  <CodeBlock block={block} />
                 ) : (
-                  <TextBlock
-                    content={
-                      block.content as { text: string; variant: string }[]
-                    }
-                  />
+                  <TextBlock content={block.content as TextPart[]} />
                 )}
               </div>
             ))}

@@ -1,4 +1,4 @@
-import { ArrowIcon, CheckIcon } from '@/assets';
+import { arrowIcon, checkIcon } from '@/assets';
 import steps from '@/constants/questionnaire';
 import Image from 'next/image';
 import BottomGradient from '../ui/bottom-gradient.aceternity';
@@ -8,7 +8,6 @@ import Response from './response';
 import GradientDivider from '../ui/gradient-divider.aceternity';
 import useCodegenStore from '@/store';
 import { CodegenStore } from '@/store/types';
-import axios from 'axios';
 
 interface QuestionnaireProps {
   currentStep: number;
@@ -26,8 +25,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
   const setFinalPrompt = useCodegenStore(
     (state: CodegenStore) => state.setFinalPrompt
   );
-  const fetchGeminiResponse = useCodegenStore(
-    (state: CodegenStore) => state.fetchGeminiResponse
+  const GEMINI_API_KEY = useCodegenStore(
+    (state: CodegenStore) => state.GEMINI_API_KEY
   );
 
   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,7 +50,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    fetchGeminiResponse();
+    e.preventDefault();
+    GEMINI_API_KEY();
     if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
   };
 
@@ -70,13 +70,13 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
         <GradientDivider className="mr-4 mt-5 xxs:mr-5 xs:mr-10" />
       </div>
       <div className="h-full">
-        {/* {currentStep !== 98 && currentStep !== 99 && (
+        {currentStep !== 98 && currentStep !== 99 && (
           <Question step={steps[currentStep]} />
         )}
 
         {currentStep === steps.length - 2 && <Preview />}
-        {currentStep === steps.length - 1 && <Response />} */}
-        <Response />
+        {currentStep === steps.length - 1 && <Response />}
+        {/* <Response /> */}
       </div>
 
       <div className="">
@@ -88,7 +88,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
               onClick={handlePrevious}
             >
               <Image
-                src={ArrowIcon}
+                src={arrowIcon}
                 alt="aaa"
                 width={10}
                 className="-rotate-180"
@@ -103,7 +103,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
               onClick={handleNext}
             >
               Next
-              <Image src={ArrowIcon} alt="aaa" width={10} className="" />
+              <Image src={arrowIcon} alt="aaa" width={10} className="" />
               <BottomGradient />
             </button>
           ) : (
@@ -113,7 +113,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
               onClick={handleSubmit}
             >
               Submit
-              <Image src={CheckIcon} alt="aaa" width={16} className="" />
+              <Image src={checkIcon} alt="aaa" width={16} className="" />
               <BottomGradient />
             </button>
           )}

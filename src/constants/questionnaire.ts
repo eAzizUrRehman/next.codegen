@@ -261,16 +261,21 @@ const steps: Step[] = [
       },
     ],
   },
-  //TODO: fix description
   {
     number: 8,
     title: 'Preview',
-    description: ['Review before submitting!', 'Review before submitting!'],
+    description: [
+      'Review your answers before submitting.',
+      'Ensure that all details are accurate and complete for the best results',
+    ],
   },
   {
     number: 9,
     title: 'Response',
-    description: ['Response!', 'Response!'],
+    description: [
+      "Powered by Google's Gemini 1.5 Flash Model!",
+      "We appreciate Google's generosity in providing free API access.",
+    ],
   },
 ];
 
