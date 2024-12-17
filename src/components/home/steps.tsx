@@ -2,7 +2,7 @@ import { arrowIcon, checkIcon } from '@/assets';
 import steps from '@/constants/steps';
 import Image from 'next/image';
 import BottomGradient from '../ui/bottom-gradient.aceternity';
-import Question from './question';
+import Question from './questions';
 import Preview from './preview';
 import Response from './response';
 import GradientDivider from '../ui/gradient-divider.aceternity';
@@ -97,16 +97,18 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
               <BottomGradient />
             </button>
           )}
-          {currentStep !== steps.length - 2 ? (
-            <button
-              className="group/btn relative mt-4 flex h-10 w-full items-center justify-center gap-x-2 rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-              onClick={handleNext}
-            >
-              Next
-              <Image src={arrowIcon} alt="aaa" width={10} className="" />
-              <BottomGradient />
-            </button>
-          ) : (
+          {currentStep !== steps.length - 2 &&
+            currentStep !== steps.length - 1 && (
+              <button
+                className="group/btn relative mt-4 flex h-10 w-full items-center justify-center gap-x-2 rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+                onClick={handleNext}
+              >
+                Next
+                <Image src={arrowIcon} alt="aaa" width={10} className="" />
+                <BottomGradient />
+              </button>
+            )}
+          {currentStep === steps.length - 2 && (
             <button
               type="submit"
               className="group/btn relative mt-4 flex h-10 w-full items-center justify-center gap-x-2 rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"

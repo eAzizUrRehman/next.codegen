@@ -58,51 +58,59 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
     setErrorValue(stepNumber, questionNumber);
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // TODO: remove logs
+  };
+
   return (
     <div className="custom-scrollbar mr-[26px] mt-2 overflow-y-auto pr-2">
-      <ul className=" ">
-        {step?.questions?.map((q, index) => (
-          <li key={index} className="mb-2">
-            <Label htmlFor={`${index}`}>
-              {q?.label}
+      <form onSubmit={handleSubmit}>
+        <ul className=" ">
+          {step?.questions?.map((q, index) => (
+            <li key={index} className="mb-2">
+              <Label htmlFor={`${index}`}>
+                {q?.label}
 
-              {q.validation?.required && <span className="ml-1">*</span>}
-            </Label>
-            <LabelInputContainer className="mt-1">
-              <SkeletonTheme
-                width={240}
-                height={440}
-                baseColor="#0d1117"
-                highlightColor="rgba(255,255,255,0.1)"
-                borderRadius={8}
-              >
-                {_isHydrated ? (
-                  <Input
-                    type={q?.type || 'text'}
-                    key={`${index}`}
-                    id={`${index}`}
-                    placeholder={q?.placeholder}
-                    value={data[step.number]?.questions[index] || ''}
-                    onChange={(e) =>
-                      setInputValueAndValidate(e, step.number, index)
-                    }
-                    {...q.validation}
-                  />
-                ) : (
-                  <div className="leading-none">
-                    <Skeleton height={44} width="100%" />
-                  </div>
-                )}
-                <div className="ml-3 mt-1 h-4 text-xs text-red-500">
-                  {data[step.number]?.errors[index] && (
-                    <>{data[step.number]?.errors[index] || ''}</>
+                {q.validation?.required && <span className="ml-1">*</span>}
+              </Label>
+              <LabelInputContainer className="mt-1">
+                <SkeletonTheme
+                  width={240}
+                  height={440}
+                  baseColor="#0d1117"
+                  highlightColor="rgba(255,255,255,0.1)"
+                  borderRadius={8}
+                >
+                  {_isHydrated ? (
+                    <Input
+                      type={q?.type || 'text'}
+                      key={`${index}`}
+                      id={`${index}`}
+                      placeholder={q?.placeholder}
+                      value={data[step.number]?.questions[index] || ''}
+                      onChange={(e) =>
+                        setInputValueAndValidate(e, step.number, index)
+                      }
+                      {...q.validation}
+                    />
+                  ) : (
+                    <div className="leading-none">
+                      <Skeleton height={44} width="100%" />
+                    </div>
                   )}
-                </div>
-              </SkeletonTheme>
-            </LabelInputContainer>
-          </li>
-        ))}
-      </ul>
+                  <div className="ml-3 mt-1 h-4 text-xs text-red-500">
+                    {data[step.number]?.errors[index] && (
+                      <>{data[step.number]?.errors[index] || ''}</>
+                    )}
+                  </div>
+                </SkeletonTheme>
+              </LabelInputContainer>
+            </li>
+          ))}
+        </ul>
+      </form>
     </div>
   );
 };

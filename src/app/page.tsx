@@ -3,19 +3,11 @@
 import { useState } from 'react';
 import { BackgroundGradient } from '@/components/ui/background-gradient.aceternity';
 import GradientDivider from '@/components/ui/gradient-divider.aceternity';
-import Questionnaire from '@/components/home/questionnaire';
+import Steps from '@/components/home/steps';
 import MainTitle from '@/components/home/main-title';
 
 const Home: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(0);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    // setCurrentStep(0);
-
-    // TODO: remove logs
-  };
 
   return (
     <BackgroundGradient
@@ -27,15 +19,9 @@ const Home: React.FC = () => {
           <MainTitle currentStep={currentStep} />
         </div>
         <GradientDivider className="mr-4 w-full shrink-0 xxs:mr-5 xs:mr-10" />
-        <form
-          className="mt-4 flex h-full w-full grow flex-col"
-          onSubmit={handleSubmit}
-        >
-          <Questionnaire
-            currentStep={currentStep}
-            setCurrentStep={setCurrentStep}
-          />
-        </form>
+        <div className="mt-4 flex h-full w-full grow flex-col">
+          <Steps currentStep={currentStep} setCurrentStep={setCurrentStep} />
+        </div>
       </div>
     </BackgroundGradient>
   );

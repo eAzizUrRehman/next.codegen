@@ -45,7 +45,7 @@ const CodeBlock = ({ block }: CodeBlockProps) => {
       </span>
       {isCopyLoading && (
         <span className="absolute left-1/2 top-5 -translate-x-1/2 -translate-y-1/2 text-white transition-transform duration-300 ease-in-out">
-          Text copied...
+          Code copied...
         </span>
       )}
       <button
@@ -76,7 +76,7 @@ const CodeBlock = ({ block }: CodeBlockProps) => {
       >
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre
-            className={`${className} ${firaCode.className} text-wrap pb-5 pt-10 text-sm`}
+            className={`${className} ${firaCode.className} text-wrap break-all pb-5 pt-10 text-sm`}
             style={style}
           >
             {tokens.map((line, i) => (
