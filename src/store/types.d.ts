@@ -8,6 +8,7 @@ export type CodegenStore = {
   _isHydrated: boolean;
   vanishingTexts: (string | null)[];
   data: Step[];
+  geminiResponse: string;
 
   setHydrated: () => void;
   setQuestionValue: (
@@ -18,4 +19,5 @@ export type CodegenStore = {
   setWelcomeMessage: () => void;
   setErrorValue: (stepNumber: number, questionNumber: number) => void;
   validateStep: (stepNumber: number, isMounting?: boolean) => boolean;
+  fetchGeminiAnswer: () => void;
 };

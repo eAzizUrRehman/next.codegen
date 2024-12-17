@@ -4,6 +4,8 @@ import { persist } from 'zustand/middleware';
 import { CodegenStore } from './types';
 import { produce } from 'immer';
 import { findError } from './helpers';
+import { GoogleGenerativeAI } from '@google/generative-ai';
+import steps, { Step } from '@/constants/questionnaire';
 
 const useCodegenStore = create<CodegenStore>()(
   persist(
@@ -39,6 +41,7 @@ const useCodegenStore = create<CodegenStore>()(
           errors: [''],
         },
       ],
+      geminiResponse: '',
       setHydrated: () => set({ _isHydrated: true }),
       setWelcomeMessage: () => {
         set((state) => {
@@ -111,6 +114,57 @@ const useCodegenStore = create<CodegenStore>()(
         });
 
         return errorAdded;
+      },
+
+      fetchGeminiAnswer: async () => {
+        const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+
+        if (!apiKey) {
+          throw new Error('NEXT_PUBLIC_GEMINI_API_KEY is not defined');
+        }
+
+        const genAI = new GoogleGenerativeAI(apiKey);
+
+        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+
+        const state = useCodegenStore.getState();
+        console.log(state.data);
+
+        function getPrompt(steps: Step[]): string {
+          let result = [];
+
+          for (let i = 1; i < steps.length; i++) {
+            if (steps[i].number === 98 || steps[i].number === 99) return '';
+
+            const step = steps[i];
+
+            if (!step.questions) return '';
+
+            for (let j = 0; j < step.questions.length; j++) {
+              const question = step.questions[j];
+              const answer = state.data[i]?.questions[j];
+              if (answer) {
+                result.push(`${question.label}\n${answer}`);
+              }
+            }
+          }
+
+          return result.join('\n\n');
+        }
+
+        const prompt = getPrompt(steps);
+
+        const result = await model.generateContent(prompt);
+        const geminiResponse = result.response.text();
+
+        set((state) => {
+          const newState = produce(state, (draft) => {
+            draft.geminiResponse = geminiResponse;
+          });
+          return newState;
+        });
+
+        // return result.response.text()
       },
     })),
     {

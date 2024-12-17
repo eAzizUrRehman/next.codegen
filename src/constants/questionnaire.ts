@@ -17,7 +17,7 @@ export type Step = {
   title: string;
   number: number;
   description: string[];
-  questions: Question[];
+  questions?: Question[];
 };
 
 const steps: Step[] = [
@@ -260,6 +260,17 @@ const steps: Step[] = [
         },
       },
     ],
+  },
+  //TODO: fix description
+  {
+    number: 8,
+    title: 'Preview',
+    description: ['Review before submitting!', 'Review before submitting!'],
+  },
+  {
+    number: 9,
+    title: 'Response',
+    description: ['Response!', 'Response!'],
   },
 ];
 

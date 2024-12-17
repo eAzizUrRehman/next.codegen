@@ -3,9 +3,12 @@ import steps from '@/constants/questionnaire';
 import Image from 'next/image';
 import BottomGradient from '../ui/bottom-gradient.aceternity';
 import Question from './question';
+import Preview from './preview';
+import Response from './response';
 import GradientDivider from '../ui/gradient-divider.aceternity';
 import useCodegenStore from '@/store';
 import { CodegenStore } from '@/store/types';
+import axios from 'axios';
 
 interface QuestionnaireProps {
   currentStep: number;
@@ -19,7 +22,16 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
   const validateStep = useCodegenStore(
     (state: CodegenStore) => state.validateStep
   );
+  const fetchGeminiAnswer = useCodegenStore(
+    (state: CodegenStore) => state.fetchGeminiAnswer
+  );
 
+  const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
   const handleNext = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -30,11 +42,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
     if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
   };
 
-  const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    fetchGeminiAnswer();
   };
 
   return (
@@ -49,8 +58,17 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
           </span>
           <span>{steps[currentStep]?.description[1]}</span>
         </p>
+        <GradientDivider className="mr-4 mt-5 xxs:mr-5 xs:mr-10" />
       </div>
-      <Question step={steps[currentStep]} />
+      <div className="h-fit">
+        {currentStep !== 98 && currentStep !== 99 && (
+          <Question step={steps[currentStep]} />
+        )}
+
+        {currentStep === steps.length - 2 && <Preview />}
+        {currentStep === steps.length - 1 && <Response />}
+      </div>
+
       <div className="">
         <GradientDivider className="mr-4 xxs:mr-5 xs:mr-10" />
         <div className="mb-4 mr-4 flex gap-x-5 xxs:mr-5 xs:mr-10">
@@ -82,6 +100,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
             <button
               type="submit"
               className="group/btn relative mt-4 flex h-10 w-full items-center justify-center gap-x-2 rounded-md bg-gradient-to-br from-black to-neutral-600 font-medium text-white shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:bg-zinc-800 dark:from-zinc-900 dark:to-zinc-900 dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+              onClick={handleSubmit}
             >
               Submit
               <Image src={CheckIcon} alt="aaa" width={16} className="" />

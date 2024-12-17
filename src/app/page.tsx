@@ -12,8 +12,9 @@ const Home: React.FC = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setCurrentStep(0);
-    console.log('Form submitted');
+    // setCurrentStep(0);
+
+    // TODO: remove logs
   };
 
   return (
@@ -25,7 +26,7 @@ const Home: React.FC = () => {
         <div className="flex min-h-[60px] w-full items-center justify-center pr-4 pt-2 xxs:pr-5 xs:pr-10">
           <MainTitle currentStep={currentStep} />
         </div>
-        <GradientDivider className="mr-4 w-full xxs:mr-5 xs:mr-10" />
+        <GradientDivider className="mr-4 w-full shrink-0 xxs:mr-5 xs:mr-10" />
         <form
           className="mt-4 flex h-full w-full grow flex-col"
           onSubmit={handleSubmit}

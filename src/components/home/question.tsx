@@ -59,7 +59,7 @@ const Question: React.FC<{ step: Step }> = ({ step }) => {
   };
 
   return (
-    <div className="custom-scrollbar mr-[26px] mt-2 min-h-[calc(100dvh-300px)] overflow-y-auto pr-2">
+    <div className="custom-scrollbar mr-[26px] mt-2 overflow-y-auto pr-2">
       <ul className=" ">
         {step?.questions?.map((q, index) => (
           <li key={index} className="mb-2">
