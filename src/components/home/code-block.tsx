@@ -1,7 +1,10 @@
+'use client';
+
 import { Highlight, themes } from 'prism-react-renderer';
 import { Fira_Code } from 'next/font/google';
-import { copyIcon } from '@/assets';
+import { checkIcon, copyIcon } from '@/assets';
 import Image from 'next/image';
+import { useState } from 'react';
 
 const firaCode = Fira_Code({
   weight: ['400', '700'],
@@ -22,13 +25,49 @@ const CodeBlock = ({ block }: CodeBlockProps) => {
   if (block.type !== 'code')
     return <span className="my-5 bg-orange-600">Error in rendering code</span>;
 
+  const [isCopyLoading, setIsCopyLoading] = useState(false);
+
+  const handleCopyToClipboard = () => {
+    if (isCopyLoading) return;
+
+    setIsCopyLoading(true);
+    navigator.clipboard.writeText(block.content);
+
+    setTimeout(() => {
+      setIsCopyLoading(false);
+    }, 1000);
+  };
+
   return (
     <div className="relative my-5 overflow-hidden rounded-xl">
       <span className="absolute left-2 top-1.5 italic text-white/50">
         {block.language}
       </span>
-      <button className="absolute right-2 top-2 italic">
-        <Image src={copyIcon} alt="" width={20} />
+      {isCopyLoading && (
+        <span className="absolute left-1/2 top-5 -translate-x-1/2 -translate-y-1/2 text-white transition-transform duration-300 ease-in-out">
+          Text copied...
+        </span>
+      )}
+      <button
+        className="absolute right-2 top-2 italic"
+        disabled={isCopyLoading}
+        onClick={handleCopyToClipboard}
+      >
+        {isCopyLoading ? (
+          <Image
+            src={checkIcon}
+            alt=""
+            height={18}
+            className="-translate-x-0.5 transition-transform duration-300 ease-in-out"
+          />
+        ) : (
+          <Image
+            src={copyIcon}
+            alt=""
+            height={20}
+            className="transition-transform duration-300 ease-in-out"
+          />
+        )}
       </button>
       <Highlight
         theme={themes.nightOwl}

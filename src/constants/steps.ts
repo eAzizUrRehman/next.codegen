@@ -274,7 +274,7 @@ const steps: Step[] = [
     title: 'Response',
     description: [
       "Powered by Google's Gemini 1.5 Flash Model!",
-      "We appreciate Google's generosity in providing free API access.",
+      'We appreciate Google, DigitalOcean, & GitHub for generous free services.',
     ],
   },
 ];

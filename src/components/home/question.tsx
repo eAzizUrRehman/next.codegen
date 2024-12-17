@@ -6,7 +6,7 @@ import { Input } from '../ui/input.aceternity';
 import LabelInputContainer from '../ui/label-input-container.aceternity';
 import { Label } from '../ui/label.aceternity';
 import { CodegenStore } from '@/store/types';
-import { Step } from '@/constants/questionnaire';
+import { Step } from '@/constants/steps';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 

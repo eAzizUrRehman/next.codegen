@@ -22,5 +22,5 @@ export type CodegenStore = {
   setErrorValue: (stepNumber: number, questionNumber: number) => void;
   validateStep: (stepNumber: number, isMounting?: boolean) => boolean;
   setFinalPrompt: () => void;
-  GEMINI_API_KEY: () => void;
+  fetchGeminiResponse: () => void;
 };

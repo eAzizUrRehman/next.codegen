@@ -1,5 +1,5 @@
 import { arrowIcon, checkIcon } from '@/assets';
-import steps from '@/constants/questionnaire';
+import steps from '@/constants/steps';
 import Image from 'next/image';
 import BottomGradient from '../ui/bottom-gradient.aceternity';
 import Question from './question';
@@ -25,8 +25,8 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
   const setFinalPrompt = useCodegenStore(
     (state: CodegenStore) => state.setFinalPrompt
   );
-  const GEMINI_API_KEY = useCodegenStore(
-    (state: CodegenStore) => state.GEMINI_API_KEY
+  const fetchGeminiResponse = useCodegenStore(
+    (state: CodegenStore) => state.fetchGeminiResponse
   );
 
   const handlePrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -51,7 +51,7 @@ const Questionnaire: React.FC<QuestionnaireProps> = ({
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    GEMINI_API_KEY();
+    fetchGeminiResponse();
     if (currentStep < steps.length - 1) setCurrentStep(currentStep + 1);
   };
 

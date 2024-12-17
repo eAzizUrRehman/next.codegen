@@ -4,7 +4,7 @@ import { persist } from 'zustand/middleware';
 import { CodegenStore } from './types';
 import { produce } from 'immer';
 import { findError } from './helpers';
-import steps from '@/constants/questionnaire';
+import steps from '@/constants/steps';
 import { callGemini } from '@/app/actions';
 
 const useCodegenStore = create<CodegenStore>()(
@@ -152,7 +152,7 @@ const useCodegenStore = create<CodegenStore>()(
           return newState;
         });
       },
-      GEMINI_API_KEY: async () => {
+      fetchGeminiResponse: async () => {
         const state = get();
 
         if (state.isFetchingResponse) return;

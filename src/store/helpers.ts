@@ -1,4 +1,4 @@
-import steps from '@/constants/questionnaire';
+import steps from '@/constants/steps';
 
 export const findError = (
   stepNumber: number,

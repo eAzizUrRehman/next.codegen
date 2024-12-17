@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BackgroundGradient } from '@/components/ui/background-gradient.aceternity';
 import GradientDivider from '@/components/ui/gradient-divider.aceternity';
 import Questionnaire from '@/components/home/questionnaire';
