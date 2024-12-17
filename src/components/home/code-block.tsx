@@ -22,10 +22,10 @@ interface CodeBlockProps {
 }
 
 const CodeBlock = ({ block }: CodeBlockProps) => {
+  const [isCopyLoading, setIsCopyLoading] = useState(false);
+
   if (block.type !== 'code')
     return <span className="my-5 bg-orange-600">Error in rendering code</span>;
-
-  const [isCopyLoading, setIsCopyLoading] = useState(false);
 
   const handleCopyToClipboard = () => {
     if (isCopyLoading) return;
