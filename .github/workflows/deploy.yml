@@ -1,15 +1,12 @@
 name: Deploy
 
-# Trigger the workflow on push and
-# pull request events on the master branch
 on:
+  # Update branches if required
   push:
-    branches: ['main']
+    branches: ["main"]
   pull_request:
-    branches: ['main']
+    branches: ["main"]
 
-# Authenticate to the the server via ssh
-# and run our deployment script
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -21,5 +18,5 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
-          key: ${{ secrets.SSHKEY }}
-          script: 'cd ~/projects/next.codegen && ./.scripts/deploy.sh'
+          key: ${{ secrets.GITHUB_ACTION_PRIVATE_SSH_KEY }}
+          script: ${{ secrets.SCRIPT }}

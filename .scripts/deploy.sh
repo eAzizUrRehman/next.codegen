@@ -3,8 +3,8 @@ set -e
 
 echo "Deployment started..."
 
+echo "Copying new changes to server!"
 git pull origin main
-echo "New changes copied to server !"
 
 echo "Installing Dependencies..."
 npm install --yes --force
@@ -12,7 +12,7 @@ npm install --yes --force
 echo "Creating Production Build..."
 npm run build
 
+pm2 reload codegen.azizurrehman.com
 echo "PM2 Reload"
-pm2 reload codegen
 
 echo "Deployment Finished!"
